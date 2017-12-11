@@ -28,17 +28,19 @@ public class UpdateConnection implements IncomingMessageListener {
 			try {
 				new UDPMessageSenderService().sendMessageOn(ipAddress.getHostAddress(), 1234, new ConnectionMessage(this.view.getLocalUser(), this.view.getLocalPortNumber(), State.ON).toString());
 
-				if (connect.isConnectionOn()) {
-					this.view.addNewConnection(connect.getPseudo());
-					ConnectionsManager.getInstance().updateConnexionInfo(connect.getPseudo(), ipAddress, connect.getPortNumber());
-				} else {
-					this.view.removeConnection(connect.getPseudo());
-					ConnectionsManager.getInstance().removeConnectionInfo(connect.getPseudo());
-				}
+                if (connect.isConnectionOn()) {
+                    this.view.addNewConnection(connect.getPseudo());
+                    ConnectionsManager.getInstance().updateConnexionInfo(connect.getPseudo(), ipAddress, connect.getPortNumber());
+                }
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
+		} else if (!connect.isConnectionOn()) {
+                this.view.removeConnection(connect.getPseudo());
+                ConnectionsManager.getInstance().removeConnectionInfo(connect.getPseudo());
+
+        }
 
 	}
 
