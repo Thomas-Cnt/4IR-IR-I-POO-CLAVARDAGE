@@ -8,6 +8,7 @@ import com.thomascantie.insa.model.network.service.UDPMessageSenderService;
 import com.thomascantie.insa.view.ViewConnections;
 
 import java.net.InetAddress;
+import java.util.Arrays;
 
 public class UpdateConnection implements IncomingMessageListener {
 
@@ -23,22 +24,26 @@ public class UpdateConnection implements IncomingMessageListener {
 
 		System.out.println(">>> recv : " + msg + " from " + ipAddress.getHostAddress() + ":" + portNumber);
 
-		if (!ConnectionsManager.getInstance().contains(msg)) {
+		ConnectionMessage connect = new ConnectionMessage(msg);
+
+		if (!ConnectionsManager.getInstance().contains(connect.getPseudo())) {
 			try {
 				new UDPMessageSenderService().sendMessageOn(ipAddress.getHostAddress(), 1234, new ConnectionMessage(this.view.getLocalUser(), this.view.getLocalPortNumber(), State.ON).toString());
 
-				ConnectionMessage connect = new ConnectionMessage(msg);
 				if (connect.isConnectionOn()) {
 					this.view.addNewConnection(connect.getPseudo());
-					ConnectionsManager.getInstance().updateConnexionInfo(msg, ipAddress, portNumber);
+					ConnectionsManager.getInstance().updateConnexionInfo(connect.getPseudo(), ipAddress, connect.getPortNumber());
 				} else {
 					this.view.removeConnection(connect.getPseudo());
-					ConnectionsManager.getInstance().removeConnectionInfo(msg);
+					ConnectionsManager.getInstance().removeConnectionInfo(connect.getPseudo());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+
+		System.out.println(Arrays.toString(ConnectionsManager.getInstance().getAllPseudos().toArray()));
+
 	}
 
 }

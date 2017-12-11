@@ -21,6 +21,7 @@ public class ChatSession extends JFrame {
 
 		try {
 			new TCPMessageReceiverService().listenOnPort(portLocal, new UpdateChat(view));
+			System.out.println("*** listening on : " + portLocal);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

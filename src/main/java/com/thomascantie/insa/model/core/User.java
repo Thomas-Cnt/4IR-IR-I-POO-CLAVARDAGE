@@ -12,4 +12,9 @@ public class User {
 		return this.pseudo;
 	}
 
+	@Override
+	public String toString() {
+		return this.pseudo;
+	}
+
 }

@@ -18,7 +18,9 @@ public class ListenerSendMessage {
 
 	public void process() {
 		try {
-			new TCPMessageSenderService().sendMessageOn(this.chat.getIpRemote(), this.chat.getRemotePort(), new Message(new Date(System.currentTimeMillis()), this.chat.getTo(), this.chat.getTextInput()).formatToSend());
+			System.out.println("*** send on : " + this.chat.getRemotePort());
+			new TCPMessageSenderService().sendMessageOn(this.chat.getIpRemote(), this.chat.getRemotePort(), new Message(new Date(System.currentTimeMillis()), this.chat.getFrom(), this.chat.getTextInput()).formatToSend());
+
 			this.chat.updateTextPane(new Date(System.currentTimeMillis()), this.chat.getFrom(), this.chat.getTextInput() + MESSAGE_SEPARATOR);
 		} catch (Exception e) {
 			e.printStackTrace();

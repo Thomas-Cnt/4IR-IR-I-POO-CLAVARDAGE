@@ -20,7 +20,11 @@ public class Message {
 	public Message(String data) {
 		int sepPseudo = data.indexOf(" :: ");
 		int sepContent = data.indexOf(" > ");
-		this.date = new Date(data.substring(0, sepPseudo));
+
+		System.out.println("**************** " + data);
+
+
+		this.date = new Date(Long.parseLong(data.substring(0, sepPseudo)));
 		this.userTo = new User(data.substring(sepPseudo+4, sepContent));
 		this.content = data.substring(sepContent+3);
 	}
