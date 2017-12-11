@@ -36,7 +36,6 @@ class WaitingMessages implements Runnable {
 				InetAddress ipAddress = socket.getInetAddress();
 				int portNumber = socket.getPort();
 				BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				socket.close();
 				this.incomingMessageListener.onNewIncomingMessage(ipAddress, portNumber, reader.readLine());
 			}
 		} catch (IOException e) {

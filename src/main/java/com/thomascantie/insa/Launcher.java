@@ -37,9 +37,9 @@ public class Launcher {
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		frame.setVisible(true);
 
-		Thread.sleep(3000);
+		//Thread.sleep(3000);
 
-		ConnectionsManager.getInstance().notifyConnectionOff();
+		//ConnectionsManager.getInstance().notifyConnectionOff();
 
 	}
 

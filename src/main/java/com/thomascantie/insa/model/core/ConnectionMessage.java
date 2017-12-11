@@ -16,8 +16,8 @@ public class ConnectionMessage {
 		int sepState = data.indexOf("--");
 		int sepPort = data.indexOf(":");
 		this.user = new User(data.substring(0, sepState));
-		this.portNumber = Integer.parseInt(data.substring(sepState+2, sepPort));
-		this.state = State.valueOf(data.substring(sepPort+2));
+		this.portNumber = Integer.parseInt(data.substring(sepPort+1));
+		this.state = State.valueOf(data.substring(sepState+2, sepPort));
 	}
 
 	public String getPseudo() {
@@ -26,6 +26,10 @@ public class ConnectionMessage {
 
 	public boolean isConnectionOn() {
 		return this.state.equals(State.ON);
+	}
+
+	public int getPortNumber() {
+		return this.portNumber;
 	}
 
 	@Override
