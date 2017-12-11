@@ -6,16 +6,39 @@ import com.thomascantie.insa.view.ViewChat;
 
 import java.util.Date;
 
+/**
+ * Classe de traitement d'envoi des messages
+ *
+ * @author Thomas Cantié
+ * @author Andy Piszyna
+ * @see ViewChat
+ */
 public class ListenerSendMessage {
 
+	/**
+	 * Constantce de séparation des messages
+	 */
 	private static final String MESSAGE_SEPARATOR = "\n";
 
+	/**
+	 * Panneau de visualisation des messages
+	 */
 	protected ViewChat chat;
 
+	/**
+	 * Constructeur
+	 *
+	 * @param chat la visualisation des messages du chat
+	 */
 	public ListenerSendMessage(ViewChat chat) {
 		this.chat = chat;
 	}
 
+	/**
+	 * Processus d'envoi du message via le réseau
+	 *
+	 * @see TCPMessageSenderService
+	 */
 	public void process() {
 		try {
 			System.out.println("*** send on : " + this.chat.getRemotePort());

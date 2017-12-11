@@ -5,8 +5,16 @@ import com.thomascantie.insa.view.InputPseudo;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * Traitement de saisie du pseudo
+ */
 public class ListenerEnteredPseudo extends ListenerPseudoValid implements KeyListener {
 
+	/**
+	 * Constructeur
+	 *
+	 * @param panelPseudo le panneau de saisie du pseudo
+	 */
 	public ListenerEnteredPseudo(InputPseudo panelPseudo) {
 		super(panelPseudo);
 	}

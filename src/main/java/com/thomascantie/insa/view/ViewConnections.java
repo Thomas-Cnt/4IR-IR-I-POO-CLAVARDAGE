@@ -6,20 +6,50 @@ import com.thomascantie.insa.model.core.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe représentant la vue des connexions courantes
+ *
+ * @author Thomas Cantié
+ * @author Andy Piszyna
+ * @see JPanel
+ */
 public class ViewConnections extends JPanel {
 
+	/**
+	 * Utilisateur local
+	 */
 	private User user;
+	/**
+	 * Adresse IP locale
+	 */
 	private String localIPAddress;
+	/**
+	 * Numéro du port d'écoute
+	 */
 	private int listeningPort;
+	/**
+	 * Sélection parmis les connexions courantes
+	 */
 	private List<JRadioButton> choices;
+	/**
+	 * Panneau d'affichage des connexions courantes
+	 */
 	private JPanel panel;
+	/**
+	 * Regroupenet des différents choix possibles
+	 */
 	private ButtonGroup group;
 
+	/**
+	 * Constructeur
+	 *
+	 * @param user       l'utilisateur local
+	 * @param ipAddress  l'adresse IP locale
+	 * @param portNumber le numéro du port d'écoute
+	 */
 	public ViewConnections(User user, String ipAddress, int portNumber) {
 		super(new BorderLayout());
 
@@ -54,6 +84,12 @@ public class ViewConnections extends JPanel {
 
 	}
 
+	/**
+	 * Modificateur
+	 * Ajoute une nouvelle connexion
+	 *
+	 * @param pseudo le pseudo associé à la nouvelle connexion
+	 */
 	public void addNewConnection(String pseudo) {
 		JRadioButton radio = new JRadioButton(pseudo);
 		this.choices.add(radio);
@@ -63,6 +99,12 @@ public class ViewConnections extends JPanel {
 		this.panel.repaint();
 	}
 
+	/**
+	 * Modificateur
+	 * Supprime une connexion
+	 *
+	 * @param pseudo le pseudo associé à la connexion
+	 */
 	public void removeConnection(String pseudo) {
 		int i;
 		for (i = 0; i < this.choices.size() && !this.choices.get(i).getText().equals(pseudo); i++) {
@@ -76,6 +118,10 @@ public class ViewConnections extends JPanel {
 		}
 	}
 
+	/**
+	 * Evaluateur
+	 * Examine la connexion sélectionnée et lance une session de chat ou continue une session existante, le cas échéant
+	 */
 	private void exam() {
 
 		int i;
@@ -86,8 +132,7 @@ public class ViewConnections extends JPanel {
 			JRadioButton radio = this.choices.get(i);
 			String pseudo = radio.getText();
 			radio.setEnabled(false);
-			radio.setText(pseudo + " (sessison already opened)");
-			radio.setSelected(false);
+			radio.setText(pseudo);
 
 			System.out.println("Session de chat avec " + pseudo);
 
@@ -105,14 +150,20 @@ public class ViewConnections extends JPanel {
 
 	}
 
+	/**
+	 * Accesseur
+	 *
+	 * @return l'utilisateur local
+	 */
 	public User getLocalUser() {
 		return this.user;
 	}
 
-	public String getLocalIPAddress() {
-		return this.localIPAddress;
-	}
-
+	/**
+	 * Accesseur
+	 *
+	 * @return le numéro de port local
+	 */
 	public int getLocalPortNumber() {
 		return this.listeningPort;
 	}

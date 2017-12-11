@@ -5,8 +5,21 @@ import com.thomascantie.insa.view.ViewChat;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * Ecouteur de saisie des messages
+ *
+ * @author Thomas Cantié
+ * @author Andy Piszyna
+ * @see ListenerSendMessage
+ * @see KeyListener
+ */
 public class ListenerEnterPressed extends ListenerSendMessage implements KeyListener {
 
+	/**
+	 * Constructeur
+	 *
+	 * @param chat la visualisation des messages du chat
+	 */
 	public ListenerEnterPressed(ViewChat chat) {
 		super(chat);
 	}

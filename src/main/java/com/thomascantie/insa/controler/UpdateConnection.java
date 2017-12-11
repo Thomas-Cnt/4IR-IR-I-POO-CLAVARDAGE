@@ -8,18 +8,39 @@ import com.thomascantie.insa.model.network.service.UDPMessageSenderService;
 import com.thomascantie.insa.view.ViewConnections;
 
 import java.net.InetAddress;
-import java.util.Arrays;
 
+/**
+ * Traitement des messages de connexion entrants
+ *
+ * @author Thomas Cantié
+ * @author Andy Piszyna
+ * @see IncomingMessageListener
+ * @see ViewConnections
+ */
 public class UpdateConnection implements IncomingMessageListener {
 
+	/**
+	 * Le panneau de visualisation des connexions
+	 */
 	private ViewConnections view;
 
+	/**
+	 * Constructeur
+	 *
+	 * @param view la vue des connexions courantes
+	 */
 	public UpdateConnection(ViewConnections view) {
 		this.view = view;
 	}
 
+	/**
+	 * Interface de traitement des messages entrants
+	 *
+	 * @param ipAddress adresse IP du message
+	 * @param msg       contenu du message
+	 */
 	@Override
-	public void onNewIncomingMessage(InetAddress ipAddress, int portNumber, String msg) {
+	public void onNewIncomingMessage(InetAddress ipAddress, String msg) {
 		msg = msg.trim();
 
 		ConnectionMessage connect = new ConnectionMessage(msg);
@@ -28,19 +49,19 @@ public class UpdateConnection implements IncomingMessageListener {
 			try {
 				new UDPMessageSenderService().sendMessageOn(ipAddress.getHostAddress(), 1234, new ConnectionMessage(this.view.getLocalUser(), this.view.getLocalPortNumber(), State.ON).toString());
 
-                if (connect.isConnectionOn()) {
-                    this.view.addNewConnection(connect.getPseudo());
-                    ConnectionsManager.getInstance().updateConnexionInfo(connect.getPseudo(), ipAddress, connect.getPortNumber());
-                }
+				if (connect.isConnectionOn()) {
+					this.view.addNewConnection(connect.getPseudo());
+					ConnectionsManager.getInstance().updateConnexionInfo(connect.getPseudo(), ipAddress, connect.getPortNumber());
+				}
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else if (!connect.isConnectionOn()) {
-                this.view.removeConnection(connect.getPseudo());
-                ConnectionsManager.getInstance().removeConnectionInfo(connect.getPseudo());
+			this.view.removeConnection(connect.getPseudo());
+			ConnectionsManager.getInstance().removeConnectionInfo(connect.getPseudo());
 
-        }
+		}
 
 	}
 

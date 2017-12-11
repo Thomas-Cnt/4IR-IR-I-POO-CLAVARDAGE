@@ -7,8 +7,20 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Classe utilitaire permettant de récuperer l'adresse IP locale
+ *
+ * @author Thomas Cantié
+ * @author Andy Piszyna
+ */
 public class LocalNetworkIPAddress {
 
+	/**
+	 * Accesseur
+	 *
+	 * @return l'adresse IP de la machine sur le réseau local ou null en cas d'erreur système
+	 * @throws SocketException si une erreur survient lors de la création ou l'utilisation d'un socket
+	 */
 	public static String getLocalIPAddress() throws SocketException {
 		InetAddress addr = null;
 
@@ -17,7 +29,7 @@ public class LocalNetworkIPAddress {
 
 		while (it.hasNext() && !found) {
 			NetworkInterface net = it.next();
-			if(net.isLoopback()) continue;
+			if (net.isLoopback()) continue;
 
 			List<InetAddress> addresses = Collections.list(net.getInetAddresses());
 
