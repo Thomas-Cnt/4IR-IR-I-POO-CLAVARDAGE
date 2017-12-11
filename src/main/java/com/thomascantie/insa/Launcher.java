@@ -6,6 +6,7 @@ import com.thomascantie.insa.model.core.ConnectionsManager;
 import com.thomascantie.insa.model.core.User;
 import com.thomascantie.insa.model.network.util.LocalNetworkIPAddress;
 import com.thomascantie.insa.model.network.util.PortNumber;
+import com.thomascantie.insa.view.InputPseudo;
 import com.thomascantie.insa.view.ViewConnections;
 
 import javax.swing.*;
@@ -40,10 +41,12 @@ public class Launcher {
 		JFrame frame = new JFrame("Application de clavardage - " + usr);
 
 		frame.setContentPane(view);
+		//frame.setContentPane(new InputPseudo());
 
 		frame.pack();
-		frame.setResizable(false);
+		frame.setResizable(true);
 		frame.setSize(600, 300);
+		//frame.setSize(400, 70);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		frame.addWindowListener(new ApplicationListener());
