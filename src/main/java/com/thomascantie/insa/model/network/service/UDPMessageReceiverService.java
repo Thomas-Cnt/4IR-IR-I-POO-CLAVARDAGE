@@ -37,10 +37,6 @@ class WaitingConnections implements Runnable {
 				InetAddress ipAddress = packet.getAddress();
 				int portNumber = packet.getPort();
 
-				System.out.println(">>> recv : " + new String(buffer));
-
-				System.out.println("from " + ipAddress.getHostAddress() + ":" + portNumber);
-
 				if (!ipAddress.getHostAddress().equals(LocalNetworkIPAddress.getLocalIPAddress())) {
 					this.listener.onNewIncomingMessage(ipAddress, portNumber, new String(buffer));
 				}

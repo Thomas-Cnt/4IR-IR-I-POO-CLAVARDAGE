@@ -22,8 +22,6 @@ public class UpdateConnection implements IncomingMessageListener {
 	public void onNewIncomingMessage(InetAddress ipAddress, int portNumber, String msg) {
 		msg = msg.trim();
 
-		System.out.println(">>> recv : " + msg + " from " + ipAddress.getHostAddress() + ":" + portNumber);
-
 		ConnectionMessage connect = new ConnectionMessage(msg);
 
 		if (!ConnectionsManager.getInstance().contains(connect.getPseudo())) {
@@ -41,8 +39,6 @@ public class UpdateConnection implements IncomingMessageListener {
 				e.printStackTrace();
 			}
 		}
-
-		System.out.println(Arrays.toString(ConnectionsManager.getInstance().getAllPseudos().toArray()));
 
 	}
 

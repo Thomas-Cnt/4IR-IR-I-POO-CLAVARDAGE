@@ -18,8 +18,6 @@ public class ConnectionsManager {
 
 	private ConnectionsManager() {
 		this.map = new HashMap<String, ConnectionInfo>();
-		map.put("toto", new ConnectionInfo("10.0.0.1", 2222));
-		map.put("titi", new ConnectionInfo("192.168.1.4", 5555));
 	}
 
 	public static synchronized ConnectionsManager getInstance() {
@@ -59,6 +57,24 @@ public class ConnectionsManager {
 			list.add(it.next());
 		}
 		return list;
+	}
+
+	public String getPseudoAtIP(InetAddress ip) {
+		for (Map.Entry<String, ConnectionInfo> entry : this.map.entrySet()) {
+			if (entry.getValue().getIPAddress().equals(ip.getHostAddress())) {
+				return entry.getKey();
+			}
+		}
+		return null;
+	}
+
+	public int getPortAtIP(InetAddress ip) {
+		for (ConnectionInfo info : this.map.values()) {
+			if (info.getIPAddress().equals(ip.getHostAddress())) {
+				return info.getPortNumber();
+			}
+		}
+		return -1;
 	}
 
 	public void notifyConnectionOn() throws Exception {
