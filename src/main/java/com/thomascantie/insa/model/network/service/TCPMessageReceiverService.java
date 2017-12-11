@@ -21,9 +21,10 @@ import java.net.Socket;
 public class TCPMessageReceiverService {
 
 	/**
+	 * Mise en écoute des messages entrants
 	 *
-	 * @param port
-	 * @throws Exception
+	 * @param port                    Le port sur lequel écouter
+	 * @throws Exception si une erreur système survient
 	 */
 	public void listenOnPort(int port) throws Exception {
 		ServerSocket server = new ServerSocket(port);
