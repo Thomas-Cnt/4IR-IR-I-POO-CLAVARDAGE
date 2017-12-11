@@ -6,3 +6,5 @@
 # specific Ignores
 target/
 
+#javadoc
+doc/
