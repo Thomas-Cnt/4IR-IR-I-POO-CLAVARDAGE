@@ -13,7 +13,7 @@ public class UpdateChat implements IncomingMessageListener {
 	private ViewChat chat;
 
 	public UpdateChat(ViewChat viewChat) {
-		this.chat = chat;
+		this.chat = viewChat;
 	}
 
 	@Override
@@ -26,7 +26,10 @@ public class UpdateChat implements IncomingMessageListener {
 		message.getDate();
 		message.getContent();
 
-		this.chat.updateTextPane(new Date(System.currentTimeMillis()), this.chat.getFrom(), msg + MESSAGE_SEPARATOR);
+		this.chat.updateTextPane(
+				new Date(System.currentTimeMillis()),
+				this.chat.getTo(),
+				message.getContent() + MESSAGE_SEPARATOR);
 	}
 
 }
