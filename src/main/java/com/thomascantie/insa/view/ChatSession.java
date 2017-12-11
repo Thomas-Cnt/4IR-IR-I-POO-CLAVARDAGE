@@ -11,7 +11,7 @@ public class ChatSession extends JFrame {
 	private ViewChat view;
 
 	public ChatSession(String s1, String s2, String ipLocal, String ip, int portLocal, int port) {
-		super("Session de chat entre " + s1 + " et " + s2 + "(" + ip + ":" + port + ")");
+		super("Session de chat avec " + s2 + "(" + ip + ":" + port + ")");
 
 		this.remotePseudo = s2;
 
@@ -23,7 +23,7 @@ public class ChatSession extends JFrame {
 		this.setResizable(true);
 		this.setSize(1000, 300);
 		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 
 	}
 
