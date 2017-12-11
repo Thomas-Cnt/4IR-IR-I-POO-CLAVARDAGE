@@ -19,20 +19,11 @@ public class ChatSession extends JFrame {
 
 		this.setContentPane(this.view);
 
-		try {
-			new TCPMessageReceiverService().listenOnPort(portLocal, new UpdateChat(view));
-			System.out.println("*** listening on : " + portLocal);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 		this.pack();
 		this.setResizable(true);
 		this.setSize(1000, 300);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-		//this.addWindowListener(new ClosingFrameListener(casimir));
 
 	}
 

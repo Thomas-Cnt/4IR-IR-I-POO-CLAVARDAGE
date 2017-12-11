@@ -1,10 +1,13 @@
 package com.thomascantie.insa.view;
 
+import com.thomascantie.insa.model.core.ChatManager;
 import com.thomascantie.insa.model.core.ConnectionsManager;
 import com.thomascantie.insa.model.core.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,17 +89,15 @@ public class ViewConnections extends JPanel {
 			radio.setText(pseudo + " (sessison already opened)");
 			radio.setSelected(false);
 
-			System.out.println("Session avec " + pseudo);
+			System.out.println("Session de chat avec " + pseudo);
 
-			ChatSession session = new ChatSession(
-					this.user.getPseudo(),
-					pseudo,
-					this.localIPAddress,
-					ConnectionsManager.getInstance().getConnexionInfoFor(pseudo).getIPAddress(),
-					this.listeningPort,
-					ConnectionsManager.getInstance().getConnexionInfoFor(pseudo).getPortNumber());
+			String addr = ConnectionsManager.getInstance().getConnexionInfoFor(pseudo).getIPAddress();
 
-			session.setVisible(true);
+			if (!ChatManager.getInstance().hasChatWith(addr)) {
+				ChatManager.getInstance().addNewChat(pseudo, addr, ConnectionsManager.getInstance().getConnexionInfoFor(pseudo).getPortNumber());
+			}
+
+			ChatManager.getInstance().getChat(addr).setVisible(true);
 
 		} else
 			System.out.println("Aucune personne sélectionée !");
