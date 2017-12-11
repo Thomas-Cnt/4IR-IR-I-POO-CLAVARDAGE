@@ -23,7 +23,7 @@ public class TCPMessageReceiverService {
 	/**
 	 * Mise en écoute des messages entrants
 	 *
-	 * @param port                    Le port sur lequel écouter
+	 * @param port Le port sur lequel écouter
 	 * @throws Exception si une erreur système survient
 	 */
 	public void listenOnPort(int port) throws Exception {
