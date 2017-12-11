@@ -1,5 +1,6 @@
 package com.thomascantie.insa;
 
+import com.thomascantie.insa.controler.ApplicationListener;
 import com.thomascantie.insa.model.core.ChatManager;
 import com.thomascantie.insa.model.core.ConnectionsManager;
 import com.thomascantie.insa.model.core.User;
@@ -9,6 +10,8 @@ import com.thomascantie.insa.view.ViewConnections;
 
 import javax.swing.*;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.net.InetAddress;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
@@ -34,7 +37,7 @@ public class Launcher {
 		ChatManager.getInstance().setLocalPortNumber(listeningPortNumber);
 		ChatManager.getInstance().listeningIncommingMessages();
 
-		JFrame frame = new JFrame("Application de clavardage");
+		JFrame frame = new JFrame("Application de clavardage - " + usr);
 
 		frame.setContentPane(view);
 
@@ -43,11 +46,8 @@ public class Launcher {
 		frame.setSize(600, 300);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		frame.addWindowListener(new ApplicationListener());
 		frame.setVisible(true);
-
-		//Thread.sleep(3000);
-
-		//ConnectionsManager.getInstance().notifyConnectionOff();
 
 	}
 
