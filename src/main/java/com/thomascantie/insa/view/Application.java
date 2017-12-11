@@ -14,6 +14,7 @@ import java.net.InetAddress;
 public class Application extends JFrame {
 
 	private static Application instance;
+	private boolean setPseudo;
 
 	private Application() {
 		super("Application de clavardage");
@@ -28,6 +29,7 @@ public class Application extends JFrame {
 	}
 
 	public void start() {
+		this.setPseudo = false;
 		this.pack();
 		this.setResizable(false);
 		this.setSize(400, 80);
@@ -38,6 +40,8 @@ public class Application extends JFrame {
 	}
 
 	public void switchContentPane(String pseudo) throws Exception {
+		this.setPseudo = true;
+
 		this.setTitle(this.getTitle() + " - " + pseudo);
 
 		User usr = new User(pseudo);
@@ -62,8 +66,14 @@ public class Application extends JFrame {
 		this.validate();
 		this.repaint();
 		this.pack();
-		this.setResizable(true);
+		this.setResizable(false);
 		this.setSize(600, 300);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+	}
+
+	public boolean isSetPseudo() {
+		return this.setPseudo;
 	}
 
 }

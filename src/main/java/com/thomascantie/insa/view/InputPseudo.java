@@ -39,7 +39,8 @@ public class InputPseudo extends JPanel {
     }
 
     private void switchContentPane() {
-        new ListenerPseudoValid(this).process();
+    	if (!this.getPseudo().isEmpty())
+        	new ListenerPseudoValid(this).process();
     }
 
     public String getPseudo() {

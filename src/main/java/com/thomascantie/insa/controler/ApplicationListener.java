@@ -1,6 +1,7 @@
 package com.thomascantie.insa.controler;
 
 import com.thomascantie.insa.model.core.ConnectionsManager;
+import com.thomascantie.insa.view.Application;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -14,11 +15,13 @@ public class ApplicationListener implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent windowEvent) {
-        try {
-            System.out.println("--- Closing application ---");
-            ConnectionsManager.getInstance().notifyConnectionOff();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (Application.getInstance().isSetPseudo()) {
+            try {
+                System.out.println("--- Closing application ---");
+                ConnectionsManager.getInstance().notifyConnectionOff();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
