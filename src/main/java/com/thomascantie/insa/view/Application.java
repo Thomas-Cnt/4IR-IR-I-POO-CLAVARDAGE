@@ -55,8 +55,8 @@ public class Application extends JFrame {
 	public void start() {
 		this.setPseudo = false;
 		this.pack();
-		this.setResizable(false);
-		this.setSize(400, 80);
+		this.setResizable(true);
+		this.setSize(600, 100);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.addWindowListener(new ApplicationListener());

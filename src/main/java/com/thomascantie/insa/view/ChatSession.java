@@ -33,7 +33,7 @@ public class ChatSession extends JFrame {
 		this.setContentPane(this.view);
 		this.pack();
 		this.setResizable(true);
-		this.setSize(1000, 300);
+		this.setSize(800, 300);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 	}
