@@ -28,22 +28,27 @@ public class InputPseudo extends JPanel {
 
 		JPanel panel = new JPanel(new SpringLayout());
 
+		JLabel label = new JLabel("Entrez votre pseudo :", JLabel.CENTER);
 		this.field = new JTextField(30);
+		this.field.addKeyListener(new ListenerEnteredPseudo(this));
+		label.setLabelFor(this.field);
+
 		JButton btn = new JButton("Valider");
 		btn.addActionListener(e -> switchContentPane());
 
+		panel.add(label);
+		panel.add(Box.createHorizontalGlue());
 		panel.add(this.field);
-		this.field.addKeyListener(new ListenerEnteredPseudo(this));
 		panel.add(Box.createVerticalGlue());
 		panel.add(btn);
 
 		SpringUtilities.makeCompactGrid(
 				panel,      // component
-				1, 3,       // rows, cols
+				1, 5,       // rows, cols
 				6, 6,       // initX, initY
 				6, 6);      // xPad, yPad
 
-		this.add(panel);
+		this.add(panel, BorderLayout.CENTER);
 
 	}
 
