@@ -2,9 +2,7 @@ package com.thomascantie.insa.view;
 
 import com.thomascantie.insa.controler.ListenerButtonClicked;
 import com.thomascantie.insa.controler.ListenerEnterPressed;
-import com.thomascantie.insa.controler.UpdateChat;
 import com.thomascantie.insa.model.core.User;
-import com.thomascantie.insa.model.network.service.TCPMessageReceiverService;
 
 import javax.swing.*;
 import java.awt.*;
