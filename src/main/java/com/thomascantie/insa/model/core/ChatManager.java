@@ -1,5 +1,6 @@
 package com.thomascantie.insa.model.core;
 
+import com.thomascantie.insa.controler.Dispatcher;
 import com.thomascantie.insa.model.network.service.TCPMessageReceiverService;
 import com.thomascantie.insa.view.ChatSession;
 
@@ -119,7 +120,7 @@ public class ChatManager {
 	 */
 	public void listeningIncommingMessages() {
 		try {
-			new TCPMessageReceiverService().listenOnPort(this.listeningPort);
+			new TCPMessageReceiverService().listenOnPort(this.listeningPort, new Dispatcher());
 			System.out.println("*** listening on : " + this.listeningPort);
 		} catch (Exception e) {
 			e.printStackTrace();
