@@ -69,9 +69,7 @@ class WaitingConnections implements Runnable {
 				this.socket.receive(packet); // block current thread until a datagram is received
 				InetAddress ipAddress = packet.getAddress();
 
-				if (!ipAddress.getHostAddress().equals(LocalNetworkIPAddress.getLocalIPAddress())) {
-					this.listener.onNewIncomingMessage(ipAddress, new String(buffer));
-				}
+				this.listener.onNewIncomingMessage(ipAddress, new String(buffer));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

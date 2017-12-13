@@ -5,9 +5,11 @@ import com.thomascantie.insa.model.core.ConnectionsManager;
 import com.thomascantie.insa.model.core.State;
 import com.thomascantie.insa.model.network.service.IncomingMessageListener;
 import com.thomascantie.insa.model.network.service.UDPMessageSenderService;
+import com.thomascantie.insa.model.network.util.LocalNetworkIPAddress;
 import com.thomascantie.insa.view.ViewConnections;
 
 import java.net.InetAddress;
+import java.net.SocketException;
 
 /**
  * Traitement des messages de connexion entrants
@@ -41,28 +43,36 @@ public class UpdateConnection implements IncomingMessageListener {
 	 */
 	@Override
 	public void onNewIncomingMessage(InetAddress ipAddress, String msg) {
-		msg = msg.trim();
 
-		ConnectionMessage connect = new ConnectionMessage(msg);
+		try {
+			if (!ipAddress.getHostAddress().equals(LocalNetworkIPAddress.getLocalIPAddress())) {
 
-		if (!ConnectionsManager.getInstance().contains(connect.getPseudo())) {
-			try {
-				new UDPMessageSenderService().sendMessageOn(ipAddress.getHostAddress(), 1234, new ConnectionMessage(this.view.getLocalUser(), this.view.getLocalPortNumber(), State.ON).toString());
+				msg = msg.trim();
 
-				if (connect.isConnectionOn()) {
-					this.view.addNewConnection(connect.getPseudo());
-					ConnectionsManager.getInstance().updateConnexionInfo(connect.getPseudo(), ipAddress, connect.getPortNumber());
+				ConnectionMessage connect = new ConnectionMessage(msg);
+
+				if (!ConnectionsManager.getInstance().contains(connect.getPseudo())) {
+					try {
+						new UDPMessageSenderService().sendMessageOn(ipAddress.getHostAddress(), 1234, new ConnectionMessage(this.view.getLocalUser(), this.view.getLocalPortNumber(), State.ON).toString());
+
+						if (connect.isConnectionOn()) {
+							this.view.addNewConnection(connect.getPseudo());
+							ConnectionsManager.getInstance().updateConnexionInfo(connect.getPseudo(), ipAddress, connect.getPortNumber());
+						}
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else if (!connect.isConnectionOn()) {
+					this.view.removeConnection(connect.getPseudo());
+					ConnectionsManager.getInstance().removeConnectionInfo(connect.getPseudo());
+
 				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
-		} else if (!connect.isConnectionOn()) {
-			this.view.removeConnection(connect.getPseudo());
-			ConnectionsManager.getInstance().removeConnectionInfo(connect.getPseudo());
 
+		} catch (SocketException e) {
+			e.printStackTrace();
 		}
-
 	}
 
 }
