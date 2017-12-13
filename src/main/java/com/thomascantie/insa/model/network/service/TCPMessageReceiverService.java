@@ -1,10 +1,5 @@
 package com.thomascantie.insa.model.network.service;
 
-import com.thomascantie.insa.controler.UpdateChat;
-import com.thomascantie.insa.model.core.ChatManager;
-import com.thomascantie.insa.model.core.ConnectionsManager;
-import com.thomascantie.insa.view.ChatSession;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,7 +13,7 @@ import java.net.Socket;
  * @author Thomas cantié
  * @author Andy Piszyna
  */
-public class TCPMessageReceiverService {
+public class TCPMessageReceiverService implements MessageReceiverService {
 
 	/**
 	 * Mise en écoute des messages entrants
@@ -26,9 +21,9 @@ public class TCPMessageReceiverService {
 	 * @param port Le port sur lequel écouter
 	 * @throws Exception si une erreur système survient
 	 */
-	public void listenOnPort(int port) throws Exception {
+	public void listenOnPort(int port, IncomingMessageListener incomingMessageListener) throws Exception {
 		ServerSocket server = new ServerSocket(port);
-		new Thread(new WaitingMessages(server)).start();
+		new Thread(new WaitingMessages(server, incomingMessageListener)).start();
 	}
 
 }
@@ -46,14 +41,19 @@ class WaitingMessages implements Runnable {
 	 * Socket d'écoute
 	 */
 	private ServerSocket serverSocket;
+	/**
+	 * Traitement des messages entrants
+	 */
+	private IncomingMessageListener listener;
 
 	/**
 	 * Constructeur
 	 *
 	 * @param serverSocket la socket d'écoute
 	 */
-	public WaitingMessages(ServerSocket serverSocket) {
+	public WaitingMessages(ServerSocket serverSocket, IncomingMessageListener listener) {
 		this.serverSocket = serverSocket;
+		this.listener = listener;
 	}
 
 	/**
@@ -69,17 +69,7 @@ class WaitingMessages implements Runnable {
 
 				BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-				if (!ChatManager.getInstance().hasChatWith(ipAddress.getHostAddress())) {
-					ChatManager.getInstance().addNewChat(ConnectionsManager.getInstance().getPseudoAtIP(ipAddress), ipAddress.getHostAddress(), ConnectionsManager.getInstance().getPortAtIP(ipAddress));
-				}
-
-				ChatSession session = ChatManager.getInstance().getChat(ipAddress.getHostAddress());
-
-				new UpdateChat(session.getView()).onNewIncomingMessage(ipAddress, reader.readLine());
-
-				session.setVisible(true);
-
-
+				this.listener.onNewIncomingMessage(ipAddress, reader.readLine());
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
