@@ -1,5 +1,6 @@
 package com.thomascantie.insa.view;
 
+import com.intellij.ui.components.JBScrollPane;
 import com.thomascantie.insa.controler.ListenerButtonClicked;
 import com.thomascantie.insa.controler.ListenerEnterPressed;
 import com.thomascantie.insa.model.core.User;
@@ -23,22 +24,6 @@ public class ViewChat extends JPanel {
 	private User from, to;
 	private String ipRemote;
 	private int remotePort;
-
-	public User getFrom() {
-		return from;
-	}
-
-	public User getTo() {
-		return to;
-	}
-
-	public String getIpRemote() {
-		return ipRemote;
-	}
-
-	public int getRemotePort() {
-		return remotePort;
-	}
 
 	public ViewChat(String pseudo1, String pseudo2, String ipremote, int portRemote) {
 		super();
@@ -85,6 +70,21 @@ public class ViewChat extends JPanel {
 
 	}
 
+	public User getFrom() {
+		return from;
+	}
+
+	public User getTo() {
+		return to;
+	}
+
+	public String getIpRemote() {
+		return ipRemote;
+	}
+
+	public int getRemotePort() {
+		return remotePort;
+	}
 
 	public String getTextInput() {
 		return this.textField.getText();
@@ -95,5 +95,8 @@ public class ViewChat extends JPanel {
 		this.textField.setText("");
 	}
 
-
+	public void disableChat() {
+		this.textField.setEnabled(false);
+		JOptionPane.showMessageDialog(this, "-- Notification --", this.to + " s'est déconnecté.", JOptionPane.INFORMATION_MESSAGE);
+	}
 }
