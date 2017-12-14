@@ -1,5 +1,6 @@
 package com.thomascantie.insa.controler;
 
+import com.thomascantie.insa.model.core.ChatManager;
 import com.thomascantie.insa.model.core.ConnectionMessage;
 import com.thomascantie.insa.model.core.ConnectionsManager;
 import com.thomascantie.insa.model.core.State;
@@ -65,6 +66,13 @@ public class UpdateConnection implements IncomingMessageListener {
 					}
 				} else if (!connect.isConnectionOn()) {
 					this.view.removeConnection(connect.getPseudo());
+
+					String ip = ConnectionsManager.getInstance().getConnexionInfoFor(connect.getPseudo()).getIPAddress();
+
+					System.out.println("Closing connection from : " + ip + " ( " + connect.getPseudo() + " )");
+
+					ChatManager.getInstance().getChat(ip).getView().disableChat();
+
 					ConnectionsManager.getInstance().removeConnectionInfo(connect.getPseudo());
 
 				}
